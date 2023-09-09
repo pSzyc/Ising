@@ -1,1 +1,1 @@
-Ising Deep Learning
+Tu run the simulations you have to have installed cargo and rust.
