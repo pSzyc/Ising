@@ -1,0 +1,11 @@
+/home/hombresabio/AI/Ising/GetData/GetDataRust/target/debug/deps/py_literal-dc18149b4fa3b9e7.rmeta: /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/lib.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/format.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/parse_macros.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/parse.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/grammar.pest
+
+/home/hombresabio/AI/Ising/GetData/GetDataRust/target/debug/deps/libpy_literal-dc18149b4fa3b9e7.rlib: /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/lib.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/format.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/parse_macros.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/parse.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/grammar.pest
+
+/home/hombresabio/AI/Ising/GetData/GetDataRust/target/debug/deps/py_literal-dc18149b4fa3b9e7.d: /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/lib.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/format.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/parse_macros.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/parse.rs /home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/grammar.pest
+
+/home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/lib.rs:
+/home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/format.rs:
+/home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/parse_macros.rs:
+/home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/parse.rs:
+/home/hombresabio/.cargo/registry/src/index.crates.io-6f17d22bba15001f/py_literal-0.4.0/src/grammar.pest:
