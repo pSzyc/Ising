@@ -1,4 +1,4 @@
-Tu run the simulations you have to have installed Cargo and Rust.
+Tu run the simulations you have to have installed Cargo and Rust. (https://doc.rust-lang.org/cargo/getting-started/installation.html)
 Example execution:
 ```console
 cd GetData/Rust/get_data_rust
