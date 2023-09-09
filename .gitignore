@@ -1,4 +1,4 @@
 **/*.ipynb_checkpoints/
 **/Data
 __pycache__
-**/Rust/target
+**/get_data_rust/target
