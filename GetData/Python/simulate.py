@@ -1,8 +1,7 @@
 import numpy as np
 
 def __createArray(L):
-    mat = np.random.randint(0,2,size=(L,L), dtype=int)
-    mat[mat==0] = -1 
+    mat = 2 * np.random.randint(0,2,size=(L,L), dtype=int) - 1
     return mat
 
 def __iterate(mat,T, H):
@@ -23,7 +22,7 @@ def __iterate(mat,T, H):
         for j in range(L):
             spin_current = mat[i,j]
             spin_new = spin_current*(-1)
-            neighbour_sum = mat[(i+1)%L,j]+mat[(i-1)%L,j]+mat[i,(j+1)%L]+mat[i,(j-1)%L]
+            neighbour_sum = mat[(i+1)%L,j]+mat[(i-1)%L,j]+mat[i,(j+1)%L]+mat[i,(j-1)%L]+mat[(i+1)%L,(j+1)%L]+mat[(i-1)%L,(j-1)%L]
             E_current = -spin_current*neighbour_sum - spin_current * H
             E_new = -spin_new*neighbour_sum - spin_new * H
             E_diff = E_new - E_current
@@ -34,6 +33,7 @@ def __iterate(mat,T, H):
 
 
 def simulate(steps, L, T, H, output_file):
+    np.random.seed()
     mat = __createArray(L)
     for _ in range(steps):
         __iterate(mat, T, H)

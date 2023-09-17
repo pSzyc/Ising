@@ -15,13 +15,8 @@ def __get_neighbour_sum_matrix(mat):
 
 def calcEnergy(mat):
     '''Energy of a given configuration'''
-    energy = 0
     matrix_sum = __get_neighbour_sum_matrix(mat)
-    for i in range(len(mat)):
-        for j in range(len(mat)):
-            spin = mat[i,j]
-            energy += -matrix_sum[i,j] * spin
-    return energy
+    return - np.sum(np.multiply(matrix_sum, mat))
 
 def calcMag(mat):
     '''Magnetization of a given configuration'''

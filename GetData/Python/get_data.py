@@ -22,7 +22,7 @@ def get_data(steps, n_samples, output_file, temp, h, l, n_workers):
         pool.starmap(simulate, [(steps, l, temp , h, output_file / f"out-{i}")  for i in range(n_samples)])
     end_time = time.time()  # End measuring time
     duration = end_time - start_time
-    print(f"{n_samples} Simulation took {duration} seconds")
+    print(f"{n_samples} simulations took {duration} seconds")
 
 if __name__ == '__main__':
     get_data()
