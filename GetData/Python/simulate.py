@@ -18,8 +18,8 @@ def __iterate(mat,T, H):
     np.random.shuffle(order1)
     np.random.shuffle(order2)
 
-    for i in range(L):
-        for j in range(L):
+    for i in order1:
+        for j in order2:
             spin_current = mat[i,j]
             spin_new = spin_current*(-1)
             neighbour_sum = mat[(i+1)%L,j]+mat[(i-1)%L,j]+mat[i,(j+1)%L]+mat[i,(j-1)%L]+mat[(i+1)%L,(j+1)%L]+mat[(i-1)%L,(j-1)%L]
