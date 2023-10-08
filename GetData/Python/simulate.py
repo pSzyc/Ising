@@ -32,6 +32,37 @@ def __iterate(mat,T, H):
                 mat[i,j] = spin_new
 
 
+def get_neighbour_sum_matrix(mat):
+    """Matrix of the sum of spin values for all neighboring cells."""
+    # Define shifts for different directions
+    shifts = [
+        (1, 1),  # Right
+        (-1, 1),  # Left
+        (-1, 0),  # Up
+        (1, 0),  # Down
+        (-1, 1),  # Up-Right
+        (1, 1),  # Down-Right
+        (-1, -1),  # Up-Left
+        (1, -1),  # Down-Left
+    ]
+
+    # Initialize an empty matrix for the sum of neighboring cells
+    neighbor_sum = np.zeros_like(mat)
+
+    # Iterate through each shift and accumulate the values in neighbor_sum
+    for shift in shifts:
+        shifted_mat = np.roll(mat, shift=shift, axis=(0, 1))
+        neighbor_sum += shifted_mat
+
+    return neighbor_sum
+
+def iterate_numpy(m, T, H):
+    m_sum = get_neighbour_sum_matrix(m)
+    e_diff = - (m_sum + H) * ( -2 * m)
+    spin_flip_mask = np.random.rand(*m.shape)<np.where(e_diff>0,np.exp(-e_diff/T), 1.0) 
+    m = m + m*(-2)*spin_flip_mask
+    return m
+
 def simulate(steps, L, T, H, output_file):
     np.random.seed()
     mat = __createArray(L)
