@@ -1,6 +1,7 @@
 import csv
 import numpy as np
 import tensorflow as tf
+import time 
 
 def load_npy_file(file_path):
     return np.load(file_path)
@@ -8,7 +9,7 @@ def load_npy_file(file_path):
 def load_numpy_file_wrapper(file_path):
     return tf.numpy_function(load_npy_file, [file_path], tf.int32)
 
-def dataset_pipeline(path, flatten=True, epochs=1, batch_size=1):
+def dataset_pipeline(path, flatten=True, batch_size=1):
     print("Getting data from " + path)
     dataset = tf.data.Dataset.list_files(f"{path}/*/*.npy")
     print(f"Got {len(dataset)} samples")
@@ -17,8 +18,9 @@ def dataset_pipeline(path, flatten=True, epochs=1, batch_size=1):
         dataset = dataset.map(lambda x: tf.reshape(x, [-1]))
     else:
         dataset = dataset.map(lambda x: tf.expand_dims(x, 2))
+    dataset = dataset.map(lambda x: (x+1)/2)
     dataset = dataset.map(lambda x: tf.cast(x, tf.float32))
-    dataset = dataset.repeat(epochs).batch(batch_size)
+    dataset = dataset.batch(batch_size)
     return dataset
 
 def get_param_dict(path):
@@ -28,3 +30,14 @@ def get_param_dict(path):
     except:
         raise ValueError("Invalid folder provided")
     return par_dict
+
+def benchmark(dataset, num_epochs=1):
+    start_time = time.perf_counter()
+    count = 0
+    for _ in range(num_epochs):
+        for sample in dataset:
+            count+=sample.shape[0]
+            # Performing a training step
+            time.sleep(1E-10)
+    tf.print("Number of examples: ",count)       
+    tf.print("Execution time:", time.perf_counter() - start_time)
