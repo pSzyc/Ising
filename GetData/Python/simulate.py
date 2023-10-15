@@ -63,9 +63,9 @@ def iterate_numpy(m, T, H):
     m = m + m*(-2)*spin_flip_mask
     return m
 
-def simulate(steps, L, T, H, output_file):
+def simulate(steps, L, T, H, output_file, numpy_sim):
     np.random.seed()
     mat = __createArray(L)
-    for _ in range(steps):
-        __iterate(mat, T, H)
+    sim_fun = iterate_numpy if numpy_sim else __iterate
+    for _ in range(steps): sim_fun(mat, T, H)
     np.save(output_file, mat)

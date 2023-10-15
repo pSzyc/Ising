@@ -9,7 +9,7 @@ def load_npy_file(file_path):
 def load_numpy_file_wrapper(file_path):
     return tf.numpy_function(load_npy_file, [file_path], tf.int32)
 
-def dataset_pipeline(path, flatten=True, batch_size=1):
+def dataset_pipeline_old(path, flatten=True, batch_size=1):
     print("Getting data from " + path)
     dataset = tf.data.Dataset.list_files(f"{path}/*/*.npy")
     print(f"Got {len(dataset)} samples")
@@ -22,6 +22,22 @@ def dataset_pipeline(path, flatten=True, batch_size=1):
     dataset = dataset.map(lambda x: tf.cast(x, tf.float32))
     dataset = dataset.batch(batch_size)
     return dataset
+
+def dataset_pipeline(path, flatten=True, batch_size=1):
+    print("Getting data from " + path)
+    dataset = tf.data.Dataset.list_files(f"{path}/*/*.npy")
+    dataset = dataset.prefetch(tf.data.AUTOTUNE)
+    print(f"Got {len(dataset)} samples")
+    dataset = dataset.map(load_numpy_file_wrapper)
+    dataset = dataset.batch(batch_size)
+    if flatten:
+        dataset = dataset.map(lambda x: tf.reshape(x, [batch_size, -1]), num_parallel_calls=tf.data.AUTOTUNE)
+    else:
+        dataset = dataset.map(lambda x: tf.expand_dims(x, 3), num_parallel_calls=tf.data.AUTOTUNE)
+    dataset = dataset.map(lambda x: (x+1)/2, num_parallel_calls=tf.data.AUTOTUNE)
+    dataset = dataset.map(lambda x: tf.cast(x, tf.float32), num_parallel_calls=tf.data.AUTOTUNE)
+    return dataset
+
 
 def get_param_dict(path):
     try:
