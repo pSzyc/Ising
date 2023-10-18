@@ -16,6 +16,54 @@ fn create_array(l: usize) -> Array2<i32> {
     mat
 }
 
+
+fn flip_cluster(mat: &mut Array2<i32>, cluster: &[(usize, usize)]) {
+    // Flip all spins in a cluster. Used for the Wolff algorithm.
+    for &(i, j) in cluster {
+        mat[[i, j]] *= -1;
+    }
+}
+
+fn iterate_wolff(mat: &mut Array2<i32>, t: f32, _h: f32) {
+    // Wolff algorithm
+    let l = mat.shape()[0];
+    let mut tracker = Array2::zeros((l, l));
+
+    let mut rng = rand::thread_rng();
+    let i = rand::thread_rng().gen_range(0..l);
+    let j = rand::thread_rng().gen_range(0..l);
+    let spin = mat[[i, j]];
+    let mut stack = vec![(i, j)];
+    tracker[[i, j]] = 1;
+
+    let mut cluster = vec![(i, j)];
+
+    while !stack.is_empty() {
+        let (i, j) = stack.pop().unwrap();
+        let neighbors = vec![
+            (i, (j + 1) % l),
+            (i, (j + l - 1) % l),
+            ((i + 1) % l, j),
+            ((i + l - 1) % l, j),
+            ((i + 1) % l, (j + 1) % l),
+            ((i + l - 1) % l, (j + l - 1) % l),
+        ];
+
+        for pair in neighbors {
+            let (l, m) = pair;
+            if mat[[l, m]] == spin && tracker[[l, m]] == 0 && rng.gen::<f32>() < (1.0 - (-2.0 / t).exp()) {
+                cluster.push((l, m));
+                stack.push((l, m));
+                tracker[[l, m]] = 1;
+            }
+        }
+    }
+
+    flip_cluster(mat, &cluster);
+}
+
+
+
 fn iterate(mat: &mut Array2<i32>, t: f32, h: f32) {
     let (l, _) = mat.dim();
     let mut order1: Vec<usize> = (0..l).collect();
@@ -63,11 +111,18 @@ fn calc_macro_config(mat: &Array2<i32>, h: f32) -> (f32, f32){
 }
 
 
-pub fn simulate(steps: usize, l: usize, t: f32, h :f32, sim_dir: &str, stats_out: bool) {
+pub fn simulate(steps: usize, l: usize, t: f32, h :f32, sim_dir: &str, stats_out: bool, wolff: bool) {
     let mut mat = create_array(l);
     let mut time_vec: Vec<(usize, f32, f32)> = Vec::new();
+
+    let iterate_function = if wolff {
+        iterate_wolff
+    } else {
+        iterate
+    };
+
     for step in 0..steps {
-        iterate(&mut mat, t, h);
+        iterate_function(&mut mat, t, h);
         if  stats_out{
             let (energy, mag) = calc_macro_config(&mat, h);
             time_vec.push((step, energy, mag));

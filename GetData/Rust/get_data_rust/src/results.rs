@@ -43,14 +43,18 @@ pub fn parameters_to_csv(args: &Vec<String>, output_dir: &str){
         "Simulatiton Number".to_string(),
         "Temperature".to_string(),
         "Magnetic Field".to_string(),
-        "Mattize Size".to_string()
+        "Mattize Size".to_string(),
+        "Wolff".to_string()
     ]).expect("Failed to write record to CSV");
+    let wolff: bool = args.iter().any(|x| x == "-wolff" || x == "--w");
+
     writer.write_record(&[
         args[1].to_string(),
         args[2].to_string(),
         args[4].to_string(),
         args[5].to_string(),
-        args[6].to_string()
+        args[6].to_string(),
+        wolff.to_string()
     ]).expect("Failed to write record to CSV");
     writer.flush().expect("Failed to flush CSV writer");
 }

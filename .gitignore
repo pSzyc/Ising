@@ -3,3 +3,4 @@
 __pycache__
 **/get_data_rust/target
 **/todo.txt
+*.h5
