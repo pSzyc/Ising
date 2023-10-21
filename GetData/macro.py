@@ -1,5 +1,9 @@
 import numpy as np
 import tensorflow as tf
+import pandas as pd
+import csv
+from matplotlib import pyplot as plt
+from pathlib import Path
 
 def get_neighbour_sum_matrix(mat):
     """Matrix of the sum of spin values for all neighboring cells."""
@@ -53,3 +57,57 @@ def calcMag(mat):
     '''Magnetization of a given configuration'''
     mag = np.sum(mat)
     return mag
+
+
+def time_series(folder):
+    try:
+        folder_path = Path(folder)
+        reader = csv.DictReader(open(folder_path / "parameters.csv"))
+        par_dict = next(reader) 
+    except:
+        raise ValueError("Invalid folder provided")
+
+    n_rows = int(par_dict['Simulatiton Number'])
+
+    fig = plt.figure(constrained_layout=True, figsize=(20, 20))
+    fig.suptitle(f"Temperature: {par_dict['Temperature']} External Field: {par_dict['Magnetic Field']}", fontsize=18)
+
+    subfigs = fig.subfigures(nrows=n_rows, ncols=1)
+
+    for index, subfig in enumerate(subfigs):
+        subfig.suptitle(f'Simulation number: {index}')
+        data = np.load(folder_path / f"output{index+1}" / "final.npy")
+
+        axs = subfig.subplots(nrows=1, ncols=3)
+
+        axs[0].imshow(data)
+        axs[0].set_title(f'Maze')
+
+        columns = ['iter','energy','mag']
+        df = pd.read_csv(folder_path / f"output{index+1}" / "data.csv", header=None, names=columns).set_index('iter')
+
+        axs[1].plot(df.energy)
+        axs[1].set_title(f'Energy')
+
+        axs[2].plot(df.mag)
+        axs[2].set_title(f'Magnetization')
+
+
+
+def get_distribution_data(folder):
+    try:
+        folder_path = Path(folder)
+        reader = csv.DictReader(open(folder_path / "parameters.csv"))
+        par_dict = next(reader) 
+    except:
+        raise ValueError("Invalid folder provided")
+    print(par_dict)
+
+    folders = [f"{folder}/output{i}/final.npy" for i in range(1, int(par_dict['Simulatiton Number']) + 1)]
+    df = pd.DataFrame(folders, columns =['folder'])
+    df['data'] = df['folder'].apply(lambda x: np.load(x))
+    df['Magnetization'] = df['data'].apply(calcMag)
+    df['Energy'] = df['data'].apply(calcEnergy)
+    df['Steps'] = int(par_dict['Steps'])
+    df['Algorithm'] = "wolff" if par_dict['Wolff'] == "true" else "metropolis"
+    return df.drop(columns=['data'])
