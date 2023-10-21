@@ -11,7 +11,7 @@ use simulation::simulate;
 fn main() {
     // Parse command-line arguments
     let args: Vec<String> = env::args().collect();
-    if args.len() != 7 && args.len() != 8 {
+    if args.len() != 7 && args.len() != 8 && args.len() != 9  {
         eprintln!("Usage: {} <steps> <num_simulations> <output directory> <t> <h> <l> [-stat|--s] [-wolff|--w]", args[0]);
         std::process::exit(1);
     }
