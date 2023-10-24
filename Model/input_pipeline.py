@@ -7,7 +7,7 @@ def load_npy_file(file_path):
     return np.load(file_path)
 
 def load_numpy_file_wrapper(file_path):
-    return tf.numpy_function(load_npy_file, [file_path], tf.int32)
+    return tf.numpy_function(load_npy_file, [file_path], tf.bool)
 
 def dataset_pipeline_old(path, flatten=True, batch_size=1):
     print("Getting data from " + path)
@@ -18,7 +18,6 @@ def dataset_pipeline_old(path, flatten=True, batch_size=1):
         dataset = dataset.map(lambda x: tf.reshape(x, [-1]))
     else:
         dataset = dataset.map(lambda x: tf.expand_dims(x, 2))
-    dataset = dataset.map(lambda x: (x+1)/2)
     dataset = dataset.map(lambda x: tf.cast(x, tf.float32))
     dataset = dataset.batch(batch_size)
     return dataset
@@ -34,7 +33,6 @@ def dataset_pipeline(path, flatten=True, batch_size=1):
         dataset = dataset.map(lambda x: tf.reshape(x, [batch_size, -1]), num_parallel_calls=tf.data.AUTOTUNE)
     else:
         dataset = dataset.map(lambda x: tf.expand_dims(x, 3), num_parallel_calls=tf.data.AUTOTUNE)
-    dataset = dataset.map(lambda x: (x+1)/2, num_parallel_calls=tf.data.AUTOTUNE)
     dataset = dataset.map(lambda x: tf.cast(x, tf.float32), num_parallel_calls=tf.data.AUTOTUNE)
     return dataset
 
