@@ -76,7 +76,7 @@ def time_series(folder):
 
     for index, subfig in enumerate(subfigs):
         subfig.suptitle(f'Simulation number: {index}')
-        data = np.load(folder_path / f"output{index+1}" / "final.npy")
+        data = 2 *  np.load(folder_path / f"output{index+1}" / "final.npy") - 1
 
         axs = subfig.subplots(nrows=1, ncols=3)
 
@@ -105,7 +105,7 @@ def get_distribution_data(folder):
 
     folders = [f"{folder}/output{i}/final.npy" for i in range(1, int(par_dict['Simulatiton Number']) + 1)]
     df = pd.DataFrame(folders, columns =['folder'])
-    df['data'] = df['folder'].apply(lambda x: np.load(x))
+    df['data'] = df['folder'].apply(lambda x: 2 * np.load(x) - 1)
     df['Magnetization'] = df['data'].apply(calcMag)
     df['Energy'] = df['data'].apply(calcEnergy)
     df['Steps'] = int(par_dict['Steps'])
