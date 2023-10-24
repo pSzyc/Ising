@@ -3,8 +3,13 @@ use std::fs;
 use csv::Writer;
 use ndarray_npy::write_npy;
 
-pub fn save_npy(mat: &Array2<i32>, output_file: &str) {
-    write_npy(output_file, mat).expect("Failed to write NPY file");
+//pub fn save_npy(mat: &Array2<i32>, output_file: &str) {
+//    write_npy(output_file, mat).expect("Failed to write NPY file");
+//}
+
+pub fn save_npy_bool(mat: &Array2<i32>, output_file: &str) {
+    let bool_mat = mat.map(|&x| x == 1);
+    write_npy(output_file, &bool_mat).expect("Failed to write NPY file");
 }
 
 pub fn dir_validate(directory_path: &str){

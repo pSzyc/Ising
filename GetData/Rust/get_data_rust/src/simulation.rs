@@ -3,7 +3,7 @@ use crate::results;
 use ndarray::Array;
 use ndarray_rand::RandomExt;
 use ndarray::Array2;
-use results::save_npy;
+use results::save_npy_bool;
 use results::vec_to_csv;
 use rand::seq::SliceRandom;
 use rand::Rng;
@@ -132,6 +132,6 @@ pub fn simulate(steps: usize, l: usize, t: f32, h :f32, sim_dir: &str, stats_out
         vec_to_csv(&time_vec, &format!("{}/data.csv", sim_dir));
     }
     let output_file = &format!("{}/final.npy", sim_dir);
-    save_npy(&mat, output_file);
+    save_npy_bool(&mat, output_file);
 
 }
