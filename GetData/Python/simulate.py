@@ -22,7 +22,7 @@ def __iterate(mat,T, H):
         for j in order2:
             spin_current = mat[i,j]
             spin_new = spin_current*(-1)
-            neighbour_sum = mat[(i+1)%L,j]+mat[(i-1)%L,j]+mat[i,(j+1)%L]+mat[i,(j-1)%L]+mat[(i+1)%L,(j+1)%L]+mat[(i-1)%L,(j-1)%L]
+            neighbour_sum = mat[(i+1)%L,j]+mat[(i-1)%L,j]+mat[i,(j+1)%L]+mat[i,(j-1)%L]
             E_current = -spin_current*neighbour_sum - spin_current * H
             E_new = -spin_new*neighbour_sum - spin_new * H
             E_diff = E_new - E_current

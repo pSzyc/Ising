@@ -45,8 +45,6 @@ fn iterate_wolff(mat: &mut Array2<i32>, t: f32, _h: f32) {
             (i, (j + l - 1) % l),
             ((i + 1) % l, j),
             ((i + l - 1) % l, j),
-            ((i + 1) % l, (j + 1) % l),
-            ((i + l - 1) % l, (j + l - 1) % l),
         ];
 
         for pair in neighbors {
@@ -78,8 +76,7 @@ fn iterate(mat: &mut Array2<i32>, t: f32, h: f32) {
             let spin_new = -spin_current;
             let neighbour_sum = (
                 mat[[i, (j + 1) % l]] + mat[[i, (j + l - 1) % l]] +
-                mat[[(i + 1) % l, j]] + mat[[(i + l - 1) % l, j]] +
-                mat[[(i + 1) % l, (j + 1) % l]] + mat[[(i + l - 1)%l, (j + l - 1) % l]]
+                mat[[(i + 1) % l, j]] + mat[[(i + l - 1) % l, j]]
             ) as f32;
             let e_current = -spin_current * neighbour_sum - spin_current * h;
             let e_new = -spin_new * neighbour_sum - spin_new * h;
@@ -101,8 +98,7 @@ fn calc_macro_config(mat: &Array2<i32>, h: f32) -> (f32, f32){
         for j in 0..l{
             let neighbour_sum = (
                 mat[[i, (j + 1) % l]] + mat[[i, (j + l - 1) % l]] +
-                mat[[(i + 1) % l, j]] + mat[[(i + l - 1) % l, j]] +
-                mat[[(i + 1) % l, (j + 1) % l]] + mat[[(i + l - 1) % l, (j + l - 1) % l]]
+                mat[[(i + 1) % l, j]] + mat[[(i + l - 1) % l, j]]
             ) as f32;
             energy += - mat[[i,j]] as f32 * (neighbour_sum + h);
         }
