@@ -55,13 +55,13 @@ def get_neighbour_sum_matrix(mat: npt.NDArray) -> float:
 
     return neighbor_sum
 
-def calcEnergy(mat):
-    '''Energy of a given configuration'''
+def calcEnergy(mat: npt.NDArray) -> float:
+    '''Energy of a given config uration'''
     matrix_sum = get_neighbour_sum_matrix(mat)
     return - np.sum(np.multiply(matrix_sum, mat))
 
-def calcMag(mat):
-    '''Magnetization of a given configuration'''
+def calcMag(mat: npt.NDArray) -> float:
+    '''Magneti zation of a given configuration'''
     mag = np.sum(mat)
     return mag
 
@@ -131,7 +131,7 @@ def simulate(steps: int, L: int, T: float, H: float, output_file: os.PathLike, w
     if stats:
         np.savetxt(output_file / "data.csv", np.array(stat_series), delimiter=',')
 
-def get_stats(index, mat, stat_series):
+def get_stats(index: int, mat: npt.NDArray, stat_series: list):
     energy = calcEnergy(mat)
     magnetization = calcMag(mat)
     stat_series.append((index, energy, magnetization))
