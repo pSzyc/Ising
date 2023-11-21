@@ -105,5 +105,5 @@ def get_distribution_data(folder):
     df['Magnetization'] = df['data'].apply(calcMag)
     df['Energy'] = df['data'].apply(calcEnergy)
     df['Steps'] = int(par_dict['Steps'])
-    df['Algorithm'] = "wolff" if par_dict['Wolff'] == "true" else "metropolis"
+    df['Algorithm'] = "wolff" if par_dict['Wolff'] == "True" else "metropolis"
     return df.drop(columns=['data'])

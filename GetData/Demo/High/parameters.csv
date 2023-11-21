@@ -1,2 +1,2 @@
-Steps,Simulatiton Number,Temperature,Magnetic Field,Mattize Size
-500,5,5,0,64
+Steps,Simulatiton Number,Temperature,Magnetic Field,Mattize Size,Wolff
+1000,5,4.0,0.0,32,False
