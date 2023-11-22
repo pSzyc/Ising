@@ -61,7 +61,7 @@ def calcEnergy(mat: npt.NDArray) -> float:
     return - np.sum(np.multiply(matrix_sum, mat))
 
 def calcMag(mat: npt.NDArray) -> float:
-    '''Magneti zation of a given configuration'''
+    '''Magnetization of a given configuration'''
     mag = np.sum(mat)
     return mag
 
@@ -127,7 +127,7 @@ def simulate(steps: int, L: int, T: float, H: float, output_file: os.PathLike, w
  
 
     output_file.mkdir(parents=True, exist_ok=True)
-    np.save(output_file / "final.npy", mat)
+    np.save(output_file / "final.npy", mat == 1)
     if stats:
         np.savetxt(output_file / "data.csv", np.array(stat_series), delimiter=',')
 
