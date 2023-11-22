@@ -2,6 +2,9 @@ import numpy as np
 from numba import jit
 import numpy.typing as npt
 import os
+import sys
+sys.path.insert(0, "..")
+from macro import calcEnergy, calcMag, get_neighbour_sum_matrix
 
 def _createArray(L: int) -> npt.NDArray:
     mat = 2 * np.random.randint(0,2,size=(L,L), dtype=int) - 1
@@ -35,35 +38,6 @@ def _iterate(mat: npt.NDArray, T: float, H: float):
             elif np.random.random()<= np.exp(-float(E_diff)/T):
                 mat[i,j] = spin_new
 
-def get_neighbour_sum_matrix(mat: npt.NDArray) -> float:
-    """Matrix of the sum of spin values for all neighboring cells."""
-    # Define shifts for different directions
-    shifts = [
-        (0, 1),  # Right
-        (0, -1),  # Left
-        (-1, 0),  # Up
-        (1, 0),  # Down
-    ]
-
-    # Initialize an empty matrix for the sum of neighboring cells
-    neighbor_sum = np.zeros_like(mat)
-
-    # Iterate through each shift and accumulate the values in neighbor_sum
-    for shift in shifts:
-        shifted_mat = np.roll(mat, shift=shift, axis=(0, 1))
-        neighbor_sum += shifted_mat
-
-    return neighbor_sum
-
-def calcEnergy(mat: npt.NDArray) -> float:
-    '''Energy of a given config uration'''
-    matrix_sum = get_neighbour_sum_matrix(mat)
-    return - np.sum(np.multiply(matrix_sum, mat))
-
-def calcMag(mat: npt.NDArray) -> float:
-    '''Magnetization of a given configuration'''
-    mag = np.sum(mat)
-    return mag
 
 @jit(nopython = True)
 def _iterateWolff(mat: npt.NDArray, T: float):

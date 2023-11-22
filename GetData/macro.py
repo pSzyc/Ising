@@ -47,7 +47,7 @@ def get_neighbour_sum_matrix_conv(mat):
 def calcEnergy(mat):
     '''Energy of a given configuration'''
     matrix_sum = get_neighbour_sum_matrix(mat)
-    return - np.sum(np.multiply(matrix_sum, mat))
+    return - np.sum(np.multiply(matrix_sum, mat)/2)
 
 def calcMag(mat):
     '''Magnetization of a given configuration'''

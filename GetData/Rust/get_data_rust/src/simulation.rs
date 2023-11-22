@@ -103,6 +103,7 @@ fn calc_macro_config(mat: &Array2<i32>, h: f32) -> (f32, f32){
             energy += - mat[[i,j]] as f32 * (neighbour_sum + h);
         }
     }
+    energy = energy / 2.0;
     (energy, mag)
 }
 
