@@ -97,6 +97,7 @@ def get_distribution_data(folder):
         par_dict = next(reader) 
     except:
         raise ValueError("Invalid folder provided")
+    print("File parameters:")
     print(par_dict)
 
     folders = [f"{folder}/output{i}/final.npy" for i in range(1, int(par_dict['Simulatiton Number']) + 1)]
