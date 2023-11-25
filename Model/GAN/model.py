@@ -45,7 +45,7 @@ def make_discriminator_model():
 
 
 def generator_loss(generated_image):
-    return tf.losses.binary_crossentropy(tf.ones_like(generated_image), generated_image)
+    return tf.reduce_mean(tf.losses.binary_crossentropy(tf.ones_like(generated_image), generated_image))
 
 
 def discriminator_loss(real_image, generated_image):
@@ -57,4 +57,4 @@ def discriminator_loss(real_image, generated_image):
 
     total_loss = real_loss + generated_loss
 
-    return total_loss
+    return tf.reduce_mean(total_loss)
