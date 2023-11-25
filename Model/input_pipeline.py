@@ -15,7 +15,7 @@ def dataset_colab_pipeline(path, flatten=True, batch_size=1):
     print(f"Got {len(data)} samples")
     dataset = tf.data.Dataset.from_tensor_slices(data)
     dataset = dataset.prefetch(tf.data.AUTOTUNE)
-    dataset = dataset.batch(batch_size)
+    dataset = dataset.batch(batch_size, drop_remainder=True)
     if flatten:
         dataset = dataset.map(lambda x: tf.reshape(x, [batch_size, -1]), num_parallel_calls=tf.data.AUTOTUNE)
     else:
@@ -30,7 +30,7 @@ def dataset_pipeline(path, flatten=True, batch_size=1):
     print(f"Got {len(dataset)} samples")
     dataset = dataset.map(load_numpy_file_wrapper)
     dataset = dataset.prefetch(tf.data.AUTOTUNE)
-    dataset = dataset.batch(batch_size)
+    dataset = dataset.batch(batch_size, drop_remainder=True)
     if flatten:
         dataset = dataset.map(lambda x: tf.reshape(x, [batch_size, -1]), num_parallel_calls=tf.data.AUTOTUNE)
     else:
