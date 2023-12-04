@@ -1,1 +1,1 @@
-scp -r ps440977@tempac.fuw.edu.pl~/copy/* ./Python/Data
+scp -r ps440977@tempac.fuw.edu.pl:~/copy/* ./Python/Data
