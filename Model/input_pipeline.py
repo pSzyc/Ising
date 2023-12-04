@@ -13,19 +13,19 @@ def load_npy_file(file_path):
 def load_numpy_file_wrapper(file_path):
     return tf.numpy_function(load_npy_file, [file_path], tf.bool)
 
-#def dataset_colab_pipeline(path, flatten=True, batch_size=1):
-#    print("Getting data from " + path)
-#    data = 2 * np.load(path) - 1
-#    print(f"Got {len(data)} samples")
-#    dataset = tf.data.Dataset.from_tensor_slices(data)
-#    dataset = dataset.prefetch(tf.data.AUTOTUNE)
-#    dataset = dataset.batch(batch_size, drop_remainder=True)
-#    if flatten:
-#        dataset = dataset.map(lambda x: tf.reshape(x, [batch_size, -1]), num_parallel_calls=tf.data.AUTOTUNE)
-#    else:
-#        dataset = dataset.map(lambda x: tf.expand_dims(x, 3), num_parallel_calls=tf.data.AUTOTUNE)
-#    dataset = dataset.map(lambda x: tf.cast(x, tf.float32), num_parallel_calls=tf.data.AUTOTUNE)
-#    return dataset
+def dataset_colab_pipeline(path, flatten=True, batch_size=1):
+    print("Getting data from " + path)
+    data = 2 * np.load(path) - 1
+    print(f"Got {len(data)} samples")
+    dataset = tf.data.Dataset.from_tensor_slices(data)
+    dataset = dataset.prefetch(tf.data.AUTOTUNE)
+    dataset = dataset.batch(batch_size, drop_remainder=True)
+    if flatten:
+        dataset = dataset.map(lambda x: tf.reshape(x, [batch_size, -1]), num_parallel_calls=tf.data.AUTOTUNE)
+    else:
+        dataset = dataset.map(lambda x: tf.expand_dims(x, 3), num_parallel_calls=tf.data.AUTOTUNE)
+    dataset = dataset.map(lambda x: tf.cast(x, tf.float32), num_parallel_calls=tf.data.AUTOTUNE)
+    return dataset
 
 def _parse_function(example_proto):
     spins = tf.io.parse_single_example(example_proto, feature_description)['data']
