@@ -1,5 +1,4 @@
 import numpy as np
-#import tensorflow as tf
 import pandas as pd
 import csv
 from matplotlib import pyplot as plt
@@ -25,25 +24,6 @@ def get_neighbour_sum_matrix(mat):
 
     return neighbor_sum
 
-
-#def __get_neighb_filter(shape):
-#    kernel = np.array([[1.0, 1.0, 1.0], 
-#       [1.0, 0.0, 1.0], 
-#       [1.0, 1.0, 1.0]]) 
-#    conv = tf.keras.layers.Conv2D(1, (3, 3), 
-#        activation='linear',
-#        input_shape=shape,
-#        padding="same", 
-#        kernel_initializer = tf.keras.initializers.Constant(kernel), use_bias=False
-#    ) 
-#    return conv
-#
-#def get_neighbour_sum_matrix_conv(mat):
-#    conv_filter = __get_neighb_filter(mat.shape)
-#    sum_mat = conv_filter(mat.reshape(1,mat.shape[0],mat.shape[1], 1).astype(np.float32))
-#    return sum_mat[0,:,:,0]
-
-
 def calcEnergy(mat):
     '''Energy of a given configuration'''
     matrix_sum = get_neighbour_sum_matrix(mat)
@@ -54,18 +34,29 @@ def calcMag(mat):
     mag = np.sum(mat)
     return mag
 
-
-def time_series(folder):
+def get_parameters_dict(folder_path):
     try:
-        folder_path = Path(folder)
+        folder_path = Path(folder_path)
         reader = csv.DictReader(open(folder_path / "parameters.csv"))
-        par_dict = next(reader) 
+        par_dict = next(reader)
+        return par_dict
     except:
         raise ValueError("Invalid folder provided")
 
-    n_rows = int(par_dict['Simulatiton Number'])
+def get_data_from_folder(folder_path):
+    par_dict = get_parameters_dict(folder_path)
+    n = int(par_dict['Simulation Number'])
+    data_list = []
+    for i in range(1, n+1):
+        data_list.append(np.load(folder_path / f"output{i}"/ "final.npy"))
+    return 2 * np.stack(data_list, axis = 0) - 1
+    
+def time_series(folder_path):
+    par_dict = get_parameters_dict(folder_path)
+    folder_path = Path(folder_path)
+    n_rows = 3
 
-    fig = plt.figure(constrained_layout=True, figsize=(20, 20))
+    fig = plt.figure(constrained_layout=True, figsize=(15, 10))
     fig.suptitle(f"Temperature: {par_dict['Temperature']} External Field: {par_dict['Magnetic Field']}", fontsize=18)
 
     subfigs = fig.subfigures(nrows=n_rows, ncols=1)
@@ -84,22 +75,21 @@ def time_series(folder):
 
         axs[1].plot(df.energy)
         axs[1].set_title(f'Energy')
-
-        axs[2].plot(df.mag)
-        axs[2].set_title(f'Magnetization')
+        
+        if par_dict['Wolff'] == 'True':
+            axs[2].plot(df.mag.abs())
+            axs[2].set_title(f'Absolute magnetization')
+        else:
+            axs[2].plot(df.mag)
+            axs[2].set_title(f'Magnetization')
+    plt.plot()
 
 
 
 def get_distribution_data(folder):
-    try:
-        folder_path = Path(folder)
-        reader = csv.DictReader(open(folder_path / "parameters.csv"))
-        par_dict = next(reader) 
-    except:
-        raise ValueError("Invalid folder provided")
+    par_dict = get_parameters_dict(folder_path)
     print("File parameters:")
     print(par_dict)
-
     folders = [f"{folder}/output{i}/final.npy" for i in range(1, int(par_dict['Simulatiton Number']) + 1)]
     df = pd.DataFrame(folders, columns =['folder'])
     df['data'] = df['folder'].apply(lambda x: 2 * np.load(x) - 1)

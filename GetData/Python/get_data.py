@@ -1,5 +1,5 @@
-#  Code used in simulating the data. Repository used in creating this file:
-#  https://github.com/DanielJCase/Ising-Deep-Learning/blob/master/Ising_genData.ipynb
+#!/usr/bin/python3
+
 import click
 from pathlib import Path
 from simulate import simulate
