@@ -4,6 +4,36 @@ import csv
 from matplotlib import pyplot as plt
 from pathlib import Path
 
+    
+def get_list_of_files(folder_path):
+    par_dict = get_parameters_dict(folder_path)
+    folder_path = Path(folder_path)
+    n = int(par_dict['Simulatiton Number'])
+    data_list = []
+    for i in range(1, n+1):
+        data_list.append(folder_path / f"output{i}"/ "final.npy")
+    return np.array(data_list)
+
+def get_heat_capacity(df, t):
+    return (1 / t )** 2 * df['energy'].var()
+    
+def get_magnetic_susceptibility(df, t):
+    return df['magnetisation'].var() / t
+
+def get_stat_df(files, L = 32):
+    df = pd.DataFrame(files, columns=['file'])
+    df['data'] = df['file'].apply(lambda x: 2 * np.load(x) - 1)
+    df['energy'] = df['data'].apply(calcEnergy)
+    df['magnetisation'] = df['data'].apply(calcMag)``
+    return df
+
+def validation_stats(filename, t):
+    files = get_list_of_files(filename)
+    df = get_stat_df(files)
+    heat_capacity =  get_heat_capacity(df, t)
+    magnetic_susceptibility = get_magnetic_susceptibility(df, t)
+    return heat_capacity, magnetic_susceptibility
+
 def get_neighbour_sum_matrix(mat):
     """Matrix of the sum of spin values for all neighboring cells."""
     # Define shifts for different directions
@@ -43,13 +73,14 @@ def get_parameters_dict(folder_path):
     except:
         raise ValueError("Invalid folder provided")
 
-def get_data_from_folder(folder_path):
+def get_list_of_files(folder_path):
     par_dict = get_parameters_dict(folder_path)
-    n = int(par_dict['Simulation Number'])
+    folder_path = Path(folder_path)
+    n = int(par_dict['Simulatiton Number'])
     data_list = []
     for i in range(1, n+1):
-        data_list.append(np.load(folder_path / f"output{i}"/ "final.npy"))
-    return 2 * np.stack(data_list, axis = 0) - 1
+        data_list.append(folder_path / f"output{i}"/ "final.npy")
+    return np.array(data_list)
     
 def time_series(folder_path):
     par_dict = get_parameters_dict(folder_path)
@@ -87,7 +118,7 @@ def time_series(folder_path):
 
 
 def get_distribution_data(folder):
-    par_dict = get_parameters_dict(folder_path)
+    par_dict = get_parameters_dict(folder)
     print("File parameters:")
     print(par_dict)
     folders = [f"{folder}/output{i}/final.npy" for i in range(1, int(par_dict['Simulatiton Number']) + 1)]
