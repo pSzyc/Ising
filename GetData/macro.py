@@ -24,7 +24,7 @@ def get_stat_df(files, L = 32):
     df = pd.DataFrame(files, columns=['file'])
     df['data'] = df['file'].apply(lambda x: 2 * np.load(x) - 1)
     df['energy'] = df['data'].apply(calcEnergy)
-    df['magnetisation'] = df['data'].apply(calcMag)``
+    df['magnetisation'] = df['data'].apply(calcMag)
     return df
 
 def validation_stats(filename, t):
