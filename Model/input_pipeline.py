@@ -14,7 +14,6 @@ def load_numpy_file_wrapper(file_path):
     return tf.numpy_function(load_npy_file, [file_path], tf.bool)
 
 def dataset_colab_pipeline(path, flatten=True, batch_size=1):
-    print("Getting data from " + path)
     data = 2 * np.load(path) - 1
     print(f"Got {len(data)} samples")
     dataset = tf.data.Dataset.from_tensor_slices(data)
@@ -44,14 +43,12 @@ def process_dataset(flatten, batch_size, dataset):
     return dataset
 
 def dataset_tfrecord_pipeline(path, flatten=True, batch_size=1):
-    print("Getting data from " + path)
     dataset = tf.data.TFRecordDataset(path)
     dataset = dataset.map(_parse_function, num_parallel_calls=tf.data.AUTOTUNE)
     dataset = process_dataset(flatten, batch_size, dataset)
     return dataset
 
 def dataset_pipeline(path, flatten=True, batch_size=1):
-    print("Getting data from " + path)
     dataset = tf.data.Dataset.list_files(f"{path}/*/*.npy")
     print(f"Got {len(dataset)} samples")
     dataset = dataset.map(load_numpy_file_wrapper)
