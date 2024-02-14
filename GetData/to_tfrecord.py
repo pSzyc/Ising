@@ -16,11 +16,12 @@ def array_to_example(data):
     example = tf.train.Example(features=tf.train.Features(feature=feature))
     return example
 
-input_folder = sys.argv[1]
-output = sys.argv[2]
-with tf.io.TFRecordWriter(output) as writer:
-    for dir_path, folders, files in os.walk(input_folder):
-        for file in files:
-            if file.endswith(".npy"):
-                example = array_to_example(np.load(os.path.join(dir_path, file)))
-                writer.write(example.SerializeToString())
+for t in np.arange(2.0, 3.1, 0.1):
+    input_folder = f"Python/Data/Data{t:.1}"
+    output_folder = f"Python/Data/Data{t:.1}.tfrecord"
+    with tf.io.TFRecordWriter(output) as writer:
+        for dir_path, folders, files in os.walk(input_folder):
+            for file in files:
+                if file.endswith(".npy"):
+                    example = array_to_example(np.load(os.path.join(dir_path, file)))
+                    writer.write(example.SerializeToString())
