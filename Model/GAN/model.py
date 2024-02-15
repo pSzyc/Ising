@@ -22,7 +22,7 @@ def make_generator_model(lattice_size = 32):
     model.add(tf.keras.layers.BatchNormalization())
     model.add(tf.keras.layers.LeakyReLU())
 
-    model.add(tf.keras.layers.Conv2DTranspose(1, (5, 5), strides=(2, 2), padding='same', use_bias=False, activation=tf.tanh))
+    model.add(tf.keras.layers.Conv2DTranspose(1, (5, 5), strides=(2, 2), padding='same', use_bias=False, activation=tf.sigmoid))
     assert model.output_shape == (None, 4 * hidden_size, 4 * hidden_size, 1)
     
     return model
@@ -30,11 +30,11 @@ def make_generator_model(lattice_size = 32):
 
 def make_discriminator_model():
     model = tf.keras.Sequential()
-    model.add(tf.keras.layers.Conv2D(16, (5, 5), strides=(2, 2), padding='same'))
+    model.add(tf.keras.layers.Conv2D(10, (5, 5), strides=(2, 2), padding='same'))
     model.add(tf.keras.layers.LeakyReLU())
     model.add(tf.keras.layers.Dropout(0.5))
       
-    model.add(tf.keras.layers.Conv2D(32, (5, 5), strides=(2, 2), padding='same'))
+    model.add(tf.keras.layers.Conv2D(20, (5, 5), strides=(2, 2), padding='same'))
     model.add(tf.keras.layers.LeakyReLU())
     model.add(tf.keras.layers.Dropout(0.5))
        
