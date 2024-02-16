@@ -194,20 +194,26 @@ def cost_function_plot(loss_list, results):
 
 
 
-def data_generator(datasets):
-    datasets = [iter(dataset) for dataset in datasets]
-    while True:
+class DataIterator:
+    def __init__(self, datasets):
+        self.datasets = datasets
+    
+    def __iter__(self):
+        self.data_iterators = [iter(data) for data in self.datasets]
+        return self
+    
+    def __next__(self):
         data_list = []
         temp_list = []
-        for index, data in enumerate(datasets):
-            data = next(data)
+        for index, data_iterator in enumerate(self.data_iterators):
+            data = next(data_iterator)
             data_list.append(data)
-            temp = np.zeros((data.shape[0], len(datasets)))
+            temp = np.zeros((data.shape[0], len(self.data_iterators)))
             temp[:, index] = 1
             temp_list.append(temp)
         temps = tf.concat(temp_list, axis=0)
         data = tf.concat(data_list, axis=0)
-        yield data, temps
+        return data, temps
         
 def cvae_dataset(data_dir, temps, batch_size=100, flatten=False):
     if isinstance(data_dir, str):
@@ -219,7 +225,7 @@ def cvae_dataset(data_dir, temps, batch_size=100, flatten=False):
     for temp in temps:
         dataset = dataset_tfrecord_pipeline(data_dir / f"Data{temp:.1f}.tfrecord", flatten=flatten, batch_size=batch_size // len(temps))
         datasets.append(dataset)
-    gen = data_generator(datasets)
+    gen = DataIterator(datasets)
     dataset = tf.data.Dataset.from_generator(lambda: gen, output_signature = (tf.TensorSpec(shape=(None, 32, 32, 1), dtype=tf.float32), tf.TensorSpec(shape=(None, len(temps)), dtype=tf.float32)))
     return dataset
 
