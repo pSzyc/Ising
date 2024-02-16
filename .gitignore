@@ -5,3 +5,4 @@ __pycache__
 **/todo.txt
 *.h5
 Model/GAN/Ising_cGAN.ipynb
+**/results
