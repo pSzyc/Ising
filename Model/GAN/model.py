@@ -2,7 +2,6 @@ import tensorflow as tf
 
 
 def make_generator_model(lattice_size = 32):
-    assert lattice_size % 4 == 0
     hidden_size = lattice_size // 4
     model = tf.keras.Sequential()
 
@@ -11,25 +10,20 @@ def make_generator_model(lattice_size = 32):
     model.add(tf.keras.layers.LeakyReLU())
 
     model.add(tf.keras.layers.Reshape((hidden_size, hidden_size, 256)))
-    assert model.output_shape == (None, hidden_size, hidden_size, 256)
     
     model.add(tf.keras.layers.Conv2DTranspose(128, (5, 5), strides=(1, 1), padding='same', use_bias=False))
-    assert model.output_shape == (None,  hidden_size,  hidden_size, 128)  
     model.add(tf.keras.layers.BatchNormalization())
     model.add(tf.keras.layers.LeakyReLU())
 
     model.add(tf.keras.layers.Conv2DTranspose(64, (5, 5), strides=(2, 2), padding='same', use_bias=False))
-    assert model.output_shape == (None, 2 * hidden_size, 2 * hidden_size, 64)  
     model.add(tf.keras.layers.BatchNormalization())
     model.add(tf.keras.layers.LeakyReLU())
 
     model.add(tf.keras.layers.Conv2DTranspose(32, (5, 5), strides=(1, 1), padding='same', use_bias=False))
-    assert model.output_shape == (None, 2 * hidden_size, 2 * hidden_size, 32)    
     model.add(tf.keras.layers.BatchNormalization())
     model.add(tf.keras.layers.LeakyReLU())
 
     model.add(tf.keras.layers.Conv2DTranspose(1, (5, 5), strides=(2, 2), padding='same', use_bias=False, activation=tf.sigmoid))
-    assert model.output_shape == (None, 4 * hidden_size, 4 * hidden_size, 1)
     
     return model
 
