@@ -43,7 +43,7 @@ class VAE(tf.keras.Model):
     mean, logvar = self.encode(inputs)
     z = self.reparameterize(mean, logvar)
     reconstructed = self.decode(z)
-    return reconstructed
+    return tf.sigmoid(reconstructed)
 
   @tf.function
   def sample(self, eps=None):
