@@ -107,3 +107,18 @@ def sample(num_examples_to_generate, model):
     z = model.reparameterize(random_mean, log_var)
     predictions = model.sample(z)
     return predictions
+
+def plus_encode_data(data):
+    data = tf.reshape(data, shape=(data.shape[0], -1))
+    mean_data = tf.reduce_mean(data, axis=1, keepdims=True)
+    need_change = tf.cast(mean_data < 0.5, data.dtype)
+    data = data * (1 - 2 * need_change) + need_change
+    data = tf.reshape(data, shape=(-1, 32, 32, 1))
+    return data   
+    
+def random_swap(data):
+    data = tf.reshape(data, shape = (data.shape[0], -1))
+    swap_mask = 2 * (np.random.random(size = (data.shape[0], 1)) > 0.5) - 1
+    data = tf.multiply(data, swap_mask)
+    data = tf.reshape(data, shape = (-1, 32, 32, 1))
+    return data

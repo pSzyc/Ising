@@ -89,3 +89,14 @@ def final_plot(data_list):
     for i, column in enumerate(['Magnetization', 'Energy', 'Magnetic susceptibility', 'Heat Capacity']):
         plt.subplot(2, 2, i + 1)
         sns.scatterplot(data=df, x=df.index, y=column, hue = 'Method', style='Method', markers=['o', 's'], alpha=0.5)
+
+def comparision_plot(data_list):
+    df = pd.DataFrame(data_list, columns=['Magnetization', 'Energy', 'Magnetic susceptibility', 'Heat Capacity', 'Temperature', 'Method'])
+    df.set_index(keys='Temperature', inplace=True)
+    plt.figure(figsize=(15, 10))
+    for i, column in enumerate(['Magnetization', 'Energy', 'Magnetic susceptibility', 'Heat Capacity']):
+        plt.subplot(2, 2, i + 1)
+        data = df[df['Method'] == 'Monte Carlo'][column] / df[df['Method'] != 'Monte Carlo'][column]
+        temps = df.index.unique()
+        plt.scatter(temps, data)
+        plt.legend('MC/ML')
