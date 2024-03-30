@@ -76,7 +76,6 @@ def get_neighbour_sum_matrix(mat):
 
 def cost_function_plot(loss_list, results):
   plt.figure()
-  plt.suptitle("Loss function vs Epoch - VAE")
   plt.plot(loss_list)
   plt.xlabel("Epoch")
   plt.ylabel("Cost function")
@@ -86,7 +85,6 @@ def final_plot(data_list):
     df = pd.DataFrame(data_list, columns=['Magnetization', 'Energy', 'Magnetic susceptibility', 'Heat Capacity', 'Temperature', 'Method'])
     df.set_index(keys='Temperature', inplace=True)
     plt.figure(figsize=(15, 10))
-    plt.suptitle("Comparison of Monte Carlo and VAE's latent space sampled data")
     plt.subplots_adjust(top=0.92)
     for i, column in enumerate(['Magnetization', 'Energy', 'Magnetic susceptibility', 'Heat Capacity']):
         plt.subplot(2, 2, i + 1)
