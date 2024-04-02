@@ -7,3 +7,4 @@ __pycache__
 Model/GAN/Ising_cGAN.ipynb
 **/results
 **/models
+*.png
