@@ -5,6 +5,9 @@ from PIL import Image
 import glob
 import pandas as pd
 import seaborn as sns
+import sys
+sys.path.insert(0, __file__ + '/..')
+from Plots.style import *
 
 def make_gif(results, temp):
   fp_in = results / f"Images/*.png"
