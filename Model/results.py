@@ -84,14 +84,12 @@ def cost_function_plot(loss_list, results):
   plt.ylabel("Cost function")
   plt.savefig(results / "loss_function.png")
 
-def final_plot(data_list):
-    df = pd.DataFrame(data_list, columns=['Magnetization', 'Energy', 'Magnetic susceptibility', 'Heat Capacity', 'Temperature', 'Method'])
-    df.set_index(keys='Temperature', inplace=True)
+def final_plot(df):
     plt.figure(figsize=(15, 10))
     plt.subplots_adjust(top=0.92)
     for i, column in enumerate(['Magnetization', 'Energy', 'Magnetic susceptibility', 'Heat Capacity']):
         plt.subplot(2, 2, i + 1)
-        sns.scatterplot(data=df, x=df.index, y=column, hue = 'Method', style='Method', markers=['o', 's'], alpha=0.5)
+        sns.scatterplot(data=df, x='Temperature', y=column, hue='Method', style='Method', markers=['o', 's', 'v'], alpha=0.5)
 
 def comparision_plot(data_list):
     df = pd.DataFrame(data_list, columns=['Magnetization', 'Energy', 'Magnetic susceptibility', 'Heat Capacity', 'Temperature', 'Method'])

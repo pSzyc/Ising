@@ -6,5 +6,6 @@ __pycache__
 *.h5
 Model/GAN/Ising_cGAN.ipynb
 **/results
+**/Results
 **/models
 *.png
