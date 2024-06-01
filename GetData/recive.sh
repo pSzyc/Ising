@@ -1,1 +1,0 @@
-scp -r ps440977@tempac.fuw.edu.pl:~/copy/* ./Python/Data
