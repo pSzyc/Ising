@@ -3,7 +3,9 @@ import pandas as pd
 import csv
 from matplotlib import pyplot as plt
 from pathlib import Path
-
+import os
+os.path.insert("..")
+from Plots import style
     
 def get_list_of_files(folder_path):
     par_dict = get_parameters_dict(folder_path)
