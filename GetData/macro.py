@@ -3,8 +3,8 @@ import pandas as pd
 import csv
 from matplotlib import pyplot as plt
 from pathlib import Path
-import os
-os.path.insert("..")
+import sys
+sys.path.append('..')
 from Plots import style
     
 def get_list_of_files(folder_path):
