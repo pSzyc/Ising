@@ -90,31 +90,37 @@ def time_series(folder_path):
     n_rows = 3
 
     fig = plt.figure(constrained_layout=True, figsize=(15, 10))
-    fig.suptitle(f"Temperature: {par_dict['Temperature']} External Field: {par_dict['Magnetic Field']}", fontsize=18)
+    #fig.suptitle(f"Temperature: {par_dict['Temperature']} External Field: {par_dict['Magnetic Field']}", fontsize=18)
 
     subfigs = fig.subfigures(nrows=n_rows, ncols=1)
 
     for index, subfig in enumerate(subfigs):
-        subfig.suptitle(f'Simulation number: {index}')
+        subfig.suptitle(f'Simulation number: {index}', fontsize=16)
         data = 2 *  np.load(folder_path / f"output{index+1}" / "final.npy") - 1
 
         axs = subfig.subplots(nrows=1, ncols=3)
 
         axs[0].imshow(data)
-        axs[0].set_title(f'Maze')
+        axs[0].set_title(f'Maze', fontsize=16)
+        axs[0].axis('off')
 
         columns = ['iter','energy','mag']
         df = pd.read_csv(folder_path / f"output{index+1}" / "data.csv", header=None, names=columns).set_index('iter')
 
         axs[1].plot(df.energy)
-        axs[1].set_title(f'Energy')
-        
+        axs[1].set_title(f'Energy', fontsize=16)
+        axs[1].set_xlabel('simulation steps')
+        axs[1].set_ylabel('value')
         if par_dict['Wolff'] == 'True':
             axs[2].plot(df.mag.abs())
-            axs[2].set_title(f'Absolute magnetization')
+            axs[2].set_title(f'Absolute magnetization', fontsize=16)
+            axs[2].set_xlabel('simulation steps')
+            axs[2].set_ylabel('value')
         else:
             axs[2].plot(df.mag)
-            axs[2].set_title(f'Magnetization')
+            axs[2].set_title(f'Magnetization', fontsize=16)
+            axs[2].set_xlabel('simulation steps')
+            axs[2].set_ylabel('value')
     plt.plot()
 
 
