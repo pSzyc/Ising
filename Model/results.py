@@ -89,7 +89,7 @@ def final_plot(df):
     plt.subplots_adjust(top=0.92)
     for i, column in enumerate(['Magnetization', 'Energy', 'Magnetic susceptibility', 'Heat Capacity']):
         plt.subplot(2, 2, i + 1)
-        sns.scatterplot(data=df, x='Temperature', y=column, hue='Method', style='Method', markers=['o', 's', 'v'], alpha=0.5)
+        sns.scatterplot(data=df, x='Temperature', y=column, hue='Method', style='Method', markers=['o', 's', 'v'], alpha=0.75, size=10)
 
 def comparision_plot(data_list):
     df = pd.DataFrame(data_list, columns=['Magnetization', 'Energy', 'Magnetic susceptibility', 'Heat Capacity', 'Temperature', 'Method'])

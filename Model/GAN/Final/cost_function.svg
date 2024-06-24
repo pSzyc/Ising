@@ -29,7 +29,7 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="pt"
      inkscape:zoom="1.7469618"
-     inkscape:cx="307.39081"
+     inkscape:cx="307.1046"
      inkscape:cy="230.4"
      inkscape:window-width="1920"
      inkscape:window-height="1011"
@@ -209,11 +209,10 @@
         <g
            id="text_6">
           <text
-             style="font: 8px 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:normal;font-family:'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', Verdana, Geneva, Lucid, Arial, Helvetica, 'Avant Garde', sans-serif;text-anchor:middle"
              x="236.16"
-             y="332.40525"
-             transform="rotate(-0 236.16 332.40525)"
-             id="text7">Batch</text>
+             y="332.40524"
+             id="text7">Batches</text>
         </g>
       </g>
       <g
@@ -420,11 +419,13 @@
         <g
            id="text_15">
           <text
-             style="fill: #d62728; font: 8px 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle"
-             x="27.12375"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:normal;font-family:'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', Verdana, Geneva, Lucid, Arial, Helvetica, 'Avant Garde', sans-serif;text-anchor:middle;fill:#d62728"
+             x="27.123751"
              y="174.528"
-             transform="rotate(-90 27.12375 174.528)"
-             id="text16">Discriminator Loss</text>
+             transform="rotate(-90,27.12375,174.528)"
+             id="text16"><tspan
+               style="font-size:12px"
+               id="tspan1">Discriminator Loss</tspan></text>
         </g>
       </g>
       <g
@@ -622,11 +623,13 @@
         <g
            id="text_22">
           <text
-             style="fill: #1f77b4; font: 8px 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle"
-             x="436.88875"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:normal;font-family:'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', Verdana, Geneva, Lucid, Arial, Helvetica, 'Avant Garde', sans-serif;text-anchor:middle;fill:#1f77b4"
+             x="436.88876"
              y="174.528"
-             transform="rotate(-90 436.88875 174.528)"
-             id="text26">Generator Loss</text>
+             transform="rotate(-90,436.88875,174.528)"
+             id="text26"><tspan
+               style="font-size:12px"
+               id="tspan2">Generator Loss</tspan></text>
         </g>
       </g>
       <g
