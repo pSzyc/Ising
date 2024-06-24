@@ -101,8 +101,7 @@ def time_series(folder_path):
         axs = subfig.subplots(nrows=1, ncols=3)
 
         axs[0].imshow(data)
-        axs[0].set_title(f'Maze', fontsize=16)
-        axs[0].axis('off')
+        axs[0].set_title(f'Configuration')
 
         columns = ['iter','energy','mag']
         df = pd.read_csv(folder_path / f"output{index+1}" / "data.csv", header=None, names=columns).set_index('iter')
