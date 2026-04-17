@@ -1,4 +1,4 @@
-Code repository for a batchelour thesis "Application of Machine Learning to Ising model".<br> 
+Code repository for a bachelor's thesis "Application of Machine Learning to Ising model".<br> 
 The thesis was about comparing VAE and GAN models by trying to recreate 2D Ising configurations with appropriate probability distribution. <br>
 The ML code is under `/Model` directory where as MC simulations are under `/GetData`  
 To run the simulations you have to have installed Cargo and Rust or Python.<br>
